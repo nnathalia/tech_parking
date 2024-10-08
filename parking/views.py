@@ -7,7 +7,6 @@ def index(request):
 
 def proprietario(request, proprietario_id):
   propritario = Proprietario.objects.get(id = proprietario_id)
-  
 
 def veiculo(request):
   veiculo = Veiculo.objects.order_by('id')
