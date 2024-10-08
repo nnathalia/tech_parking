@@ -1,0 +1,40 @@
+{% load static %}
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/navbar-style.css' %}" />
+    <script src="https://kit.fontawesome.com/7a2b9d2cd6.js" crossorigin="anonymous"></script>
+
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+  </head>
+  <header>
+    {% block navbar %}
+    {% include '../_partials/_navbar.html' %}
+    {% endblock %}
+  </header>
+  <body>
+    <div class="d-flex">
+      {% block sidebar %}
+        {% include '../_partials/_sidebar.html' %}
+      {% endblock %}
+
+      <main class="flex-fill p-3">
+        {% block content %} {% endblock %}
+      </main>
+    </div>
+  </body>
+  <footer>
+    {% block footer %}
+        {% include '../_partials/_footer.html' %}
+      {% endblock %}
+  </footer>
+</html>
