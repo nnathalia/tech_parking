@@ -8,10 +8,11 @@ def index(request):
 def proprietario(request, proprietario_id):
   propritario = Proprietario.objects.get(id = proprietario_id)
 
-def veiculo(request):
-  veiculo = Veiculo.objects.order_by('id')
+def veiculos(request):
+  '''veiculo = Veiculo.objects.order_by('id')
   context = {'veiculo': veiculo}
-  return render(request, 'parking/veiculos.html', context)
+  return render(request, 'parking/veiculos.html', context)'''
+  return render(request, 'pages/veiculos.html')
 
 def index(request):
   return render(request, 'index.html')
