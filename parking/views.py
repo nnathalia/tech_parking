@@ -23,3 +23,9 @@ def home(request):
 def vagas(request):
   return render(request, 'pages/vagas.html')
 
+def login(request):
+  return render(request, 'auth/login.html')
+
+def cadastro(request):
+  return render(request, 'auth/cadastro.html')
+
