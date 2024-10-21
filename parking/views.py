@@ -6,8 +6,6 @@ from django.contrib import messages
 from .forms import ProprietarioForm, LoginForm
 from .models import Proprietario, Veiculo
 
-
-
 def cadastro_view(request):
     if request.method == 'POST':
         form = ProprietarioForm(request.POST)
