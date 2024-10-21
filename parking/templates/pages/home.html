@@ -2,5 +2,16 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 
-  <h1>Home</h1>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <div class=" col-6 user">
+        <div class="">
+          <p>Bem-vindo, {{ request.user.nome }}!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 {% endblock %}

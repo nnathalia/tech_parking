@@ -1,5 +1,58 @@
 {% extends '../layout/layout-form.html' %}
-{% block title %}Login - Tech parking{% endblock %}
+{% block title %}
+  Login - Tech parking
+{% endblock %}
 {% block content %}
+  {% load static %}
 
+  <section class="container-fluid vh-100">
+    <div class="row">
+      <div class="col-5 d-flex flex-column justify-content-center align-items-center vh-100" style="background-color: #072e33;">
+        <div class="text">
+          <h2 class="text-white fw-bold">Tech Parking</h2>
+          <p class="text-white fw-ligth">Estacione com Inteligência, Conecte-se com Facilidade.</p>
+        </div>
+        <div class="">
+          <img src="{% static 'img/car.png' %}" style="width: 100%;" alt="" />
+        </div>
+
+        <div>
+          <p class="text-white fw-ligth">Não tem conta?</p>
+          <a href="{% url 'cadastro' %}"><button type="submit" class="btn p-2 fw-bold" style="width: 100%; background-color: #fff;">Cadastre-se</button></a>
+        </div>
+      </div>
+
+      <div class="col-7 d-flex flex-column justify-content-center align-items-center vh-100">
+        <h3 class="fw-bold" style="color: #072e33;">Bem vindo ao Tech Parking</h3>
+        <h4 class="mb-2">Faça login para continuar</h4>
+
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="id_username" class="form-label">CPF</label>
+            {{ form.username.errors }}
+            {{ form.username }} <!-- Campo CPF renderizado com as classes e placeholders definidos -->
+          </div>
+
+          <div class="mb-3">
+            <label for="id_password" class="form-label">Senha</label>
+            {{ form.password.errors }}
+            {{ form.password }} <!-- Campo Senha renderizado com as classes e placeholders definidos -->
+          </div>
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <div class="bg-button mt-4">
+            <button type="submit" class="btn fw-bold p-2" style="width: 100%;">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 {% endblock %}
