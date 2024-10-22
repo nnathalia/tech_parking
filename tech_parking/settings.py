@@ -109,7 +109,6 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_USER_MODEL = 'parking.Proprietario'
 
-
 LOGIN_REDIRECT_URL = 'home'
 
 # Internationalization
