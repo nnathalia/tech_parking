@@ -26,18 +26,19 @@
         <h3 class="fw-bold" style="color: #072e33;">Bem vindo ao Tech Parking</h3>
         <h4 class="mb-2">Faça login para continuar</h4>
 
-        <form class="mt-4" method="post">
+        <form method="post">
           {% csrf_token %}
+
           <div class="mb-3">
             <label for="id_username" class="form-label">CPF</label>
             {{ form.username.errors }}
-            {{ form.username }} 
+            {{ form.username }} <!-- Campo CPF renderizado com as classes e placeholders definidos -->
           </div>
 
           <div class="mb-3">
             <label for="id_password" class="form-label">Senha</label>
             {{ form.password.errors }}
-            {{ form.password }} 
+            {{ form.password }} <!-- Campo Senha renderizado com as classes e placeholders definidos -->
           </div>
           {% if messages %}
             <ul>
