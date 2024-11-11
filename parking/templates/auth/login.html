@@ -26,33 +26,17 @@
         <h3 class="fw-bold" style="color: #072e33;">Bem vindo ao Tech Parking</h3>
         <h4 class="mb-2">Faça login para continuar</h4>
 
-<<<<<<< HEAD
         <form class="mt-4" method="post" action=" {% url 'login' %}">
           {% csrf_token %}
-          
+
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" name="username"> 
+            <input type="text" class="form-control" name="username" />
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Senha</label>
-            <input type="password" class="form-control" name="password" > 
-=======
-        <form method="post">
-          {% csrf_token %}
-
-          <div class="mb-3">
-            <label for="id_username" class="form-label">CPF</label>
-            {{ form.username.errors }}
-            {{ form.username }} <!-- Campo CPF renderizado com as classes e placeholders definidos -->
-          </div>
-
-          <div class="mb-3">
-            <label for="id_password" class="form-label">Senha</label>
-            {{ form.password.errors }}
-            {{ form.password }} <!-- Campo Senha renderizado com as classes e placeholders definidos -->
->>>>>>> d296d2f42ca40968817a0ecf37caeb09017b9d7b
+            <input type="password" class="form-control" name="password" />
           </div>
           {% if messages %}
             <div class="alert alert-danger">
