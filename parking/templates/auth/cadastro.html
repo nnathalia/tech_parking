@@ -25,59 +25,55 @@
         <h3 class="fw-bold" style="color: #072e33;">Bem vindo ao Tech Parking</h3>
         <h4 class="mb-2">Cadastre-se para continuar</h4>
 
-        <form class="mt-4" method="post">
+        <form class="mt-4" method="post" action=" {% url 'cadastro' %}">
           {% csrf_token %}
 
-          <div class="mb-3">
-            <label for="id_nome" class="form-label">Nome completo</label>
-            {{ form.nome }} 
-            <div id="namelHelp" class="form-text">Digite o nome sem abreviações.</div>
-          </div>
-
           <div class="row">
             <div class="mb-3 col-6">
-              <label for="id_telefone" class="form-label">Telefone</label>
-              {{ form.telefone }}
+              <label for="name" class="form-label">Nome</label>
+              <input type="text" class="form-control" name="first_name" required/>
             </div>
             <div class="mb-3 col-6">
-              <label for="id_cpf" class="form-label">CPF</label>
-              {{ form.cpf }}
+              <label for="name" class="form-label">Sobrenome</label>
+              <input type="text" class="form-control" name="last_name" required/>
             </div>
           </div>
+          
 
-          <div class="mb-3 form-floating">
-            <label for="id_tipo_prop">Tipo de cadastro</label>
-            {{ form.tipo_prop }}
-          </div>
-
+          
+          
           <div class="mb-3">
-            <label for="id_email" class="form-label">Email</label>
-            {{ form.email }}
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" name="email" required/>
             <div id="emailHelp" class="form-text">Nunca compartilharemos seu e-mail com mais ninguém.</div>
           </div>
-
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" name="username" />
+          </div>
           <div class="row">
-            <div class="mb-3 col-6">
-              <label for="id_senha" class="form-label">Senha</label>
-              {{ form.senha }}
+            <div class="mb-1 col-6">
+              <label for="password" class="form-label">Senha</label>
+              <input type="password" class="form-control" name="password" required />
             </div>
-            <div class="mb-3 col-6">
-              <label for="id_confirmar_senha" class="form-label">Confirmar senha</label>
-              {{ form.confirmar_senha }}
+
+            <div class="mb-1 col-6">
+              <label for="confirm_password" class="form-label">Confirmar Senha</label>
+              <input type="password" class="form-control" name="confirm_password" required/>
             </div>
           </div>
-
+          <div id="emailHelp" class="form-text mt-0">A senha precisa ter no mínimo 8 caracters</div>
           {% if messages %}
-            <ul>
+            <div class="alert alert-danger">
               {% for message in messages %}
-                <li>{{ message }}</li>
+                <p>{{ message }}</p>
               {% endfor %}
-            </ul>
+            </div>
           {% endif %}
-
           <div class="bg-button mt-4">
             <button type="submit" class="btn fw-bold p-2" style="width: 100%;">Cadastrar</button>
           </div>
+          
         </form>
       </div>
     </div>

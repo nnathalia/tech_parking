@@ -26,25 +26,24 @@
         <h3 class="fw-bold" style="color: #072e33;">Bem vindo ao Tech Parking</h3>
         <h4 class="mb-2">Faça login para continuar</h4>
 
-        <form class="mt-4" method="post">
+        <form class="mt-4" method="post" action=" {% url 'login' %}">
           {% csrf_token %}
+          
           <div class="mb-3">
-            <label for="id_username" class="form-label">CPF</label>
-            {{ form.username.errors }}
-            {{ form.username }} 
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" name="username"> 
           </div>
 
           <div class="mb-3">
-            <label for="id_password" class="form-label">Senha</label>
-            {{ form.password.errors }}
-            {{ form.password }} 
+            <label for="password" class="form-label">Senha</label>
+            <input type="password" class="form-control" name="password" > 
           </div>
           {% if messages %}
-            <ul>
+            <div class="alert alert-danger">
               {% for message in messages %}
-                <li>{{ message }}</li>
+                <p>{{ message }}</p>
               {% endfor %}
-            </ul>
+            </div>
           {% endif %}
 
           <div class="bg-button mt-4">

@@ -7,7 +7,9 @@
     <div class="row">
       <div class=" col-6 user">
         <div class="">
-          <p>Bem-vindo, {{ request.user.nome }}!</p>
+          {% if user.is_authenticated %}
+          <p>Bem-vindo, {{ user.first_name }}!</p>
+          {% endif %}
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--5ap$@6i@=g1h70p=q$*5qvq%okq0@)0^h6o1m1)1)-8h0jk9a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] 
 
 
 # Application definition
@@ -80,8 +80,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
+
+
+
 
 
 # Password validation
@@ -102,15 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    'parking.backends.CPFBackend',
-    'django.contrib.auth.backends.ModelBackend',  # Mantém o backend padrão
-]
-
-AUTH_USER_MODEL = 'parking.Proprietario'
-
 LOGIN_REDIRECT_URL = 'home'
-
+LOGOUT_REDIRECT_URL = 'index'
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
