@@ -1,5 +1,51 @@
-<html>
-  <a href="{% url 'home' %}">home</a>
-  <a href="{% url 'login' %}">login</a>
-  <a href="{% url 'cadastro' %}">cadastro</a>
+{% load static %}
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <script src="https://kit.fontawesome.com/7a2b9d2cd6.js" crossorigin="anonymous"></script>
+
+    <link rel="icon" href="{% static 'img/icon.png' %}" />
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <title>
+      {% block title %}
+        Tech Parking
+      {% endblock %}
+    </title>
+  </head>
+
+  <body style="background-color: #072e33;">
+    <header class="header-menu">
+      <nav class="navbar bg-white">
+        <div class="container">
+          <a class="navbar-brand d-inline-block align-text-top text-black"><img src="{% static 'img/icon.png' %}" style="max-width: 40px;" alt="logo" />Tech Parking</a>
+          <a href="{% url 'login' %}"><button class="btn text-white" style="background-color: #072e33;">Login</button></a>
+        </div>
+      </nav>
+
+      <section class="container-fluid d-flex justify-content-center align-items-center bg-section" id="home">
+        <div class="conatiner m-5 p-5">
+          <div class="row">
+            <div class="col-md-6 col-sm-12 d-flex justify-content-center flex-column">
+              <h1 class="text-white">Seu carro seguro, sua tranquilidade garantida!</h1>
+              <p class="text-white fw-light">Tech Parking: mais que um estacionamento, uma experiência segura!</p>
+              <a href="{% url 'cadastro' %}" class="rounded" style="background-color: white; max-width: 100px;"><button class="btn" style="color: #072e33;">Cadastrar</button></a>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mt-4">
+              <img src="{% static 'img/car.png' %}" alt="Imagem do tempo" style="width: 100%;" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </header>
+  </body>
 </html>

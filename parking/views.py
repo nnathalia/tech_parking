@@ -32,8 +32,8 @@ def cadastro (request):
       messages.error(request, 'As senhas não coincidem.')
       return render(request, 'auth/cadastro.html')
     
-    if len(password) < 8:
-      messages.error(request, 'A senha precisa ter no mínimo 8 caracters')
+    if len(password) < 6:
+      messages.error(request, 'A senha precisa ter no mínimo 6 caracters')
       return render(request, 'auth/cadastro.html')
     
     user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name= last_name)
