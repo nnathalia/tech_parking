@@ -1,22 +1,23 @@
 {% extends '../layout/layout.html' %}
-{% block title %}Veiculos{% endblock %}
+{% block title %}
+  Veiculos
+{% endblock %}
 {% block content %}
-
   <section class="container-fluid d-flex gap-2 auto p-3">
     <div class="formulario col-8 p-3 me-3 border-radius" style="background-color: whitesmoke;">
       <h3 class="">Cadastrar novo veículo</h3>
       <form>
         <div class="mb-3">
           <label for="inputplaca" class="form-label">Placa</label>
-          <input type="text" class="form-control" id="inputplaca"  placeholder="Ex: ABC-1234">
+          <input type="text" class="form-control" id="inputplaca" placeholder="Ex: ABC-1234" />
         </div>
         <div class="mb-3">
           <label for="inputmodelo" class="form-label">Modelo</label>
-          <input type="text" class="form-control" id="inputmodelo" placeholder="Ex: Honda Civic">
+          <input type="text" class="form-control" id="inputmodelo" placeholder="Ex: Honda Civic" />
         </div>
         <div class="mb-3">
           <label for="inputcor" class="form-label">Cor</label>
-          <input type="text" class="form-control" id="inputcor" placeholder="Ex: Preto">
+          <input type="text" class="form-control" id="inputcor" placeholder="Ex: Preto" />
         </div>
         <button type="submit" class="btn btn-primary">Cadastrar</button>
       </form>
@@ -30,8 +31,6 @@
         <li>veiculo 3</li>
         <li>veiculo 4</li>
       </ul>
-
     </div>
   </section>
-
 {% endblock %}

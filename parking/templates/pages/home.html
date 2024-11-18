@@ -1,19 +1,17 @@
 {% extends '../layout/layout.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}
+  Home
+{% endblock %}
 {% block content %}
-
-  
   <div class="container-fluid">
     <div class="row">
-      <div class=" col-6 user">
+      <div class="col-6 user">
         <div class="">
           {% if user.is_authenticated %}
-          <p>Olá, {{ user.first_name }}!</p>
+            <p>Olá, {{ user.first_name }}!</p>
           {% endif %}
         </div>
       </div>
     </div>
   </div>
-
-
 {% endblock %}
