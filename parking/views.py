@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -5,6 +6,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Veiculo, Vaga
+=======
+import json
+from django.shortcuts import render
+from .models import Proprietario, Veiculo
+from django.views.decorators.csrf import csrf_exempt
+>>>>>>> 844566599bad5eba4db1e0b8152b6daa4dd429f3
 
 
 def cadastro (request):
@@ -59,6 +66,7 @@ def login_view (request):
       return render(request, 'auth/login.html')
     
 
+<<<<<<< HEAD
 def logout_view(request):
   logout(request)
   return redirect('index')
@@ -70,6 +78,19 @@ def home(request):
 @login_required(login_url='login')
 def veiculos(request):
   return render(request, 'pages/veiculos.html')
+=======
+@csrf_exempt
+def veiculos(request):
+  if request.method == 'POST':
+    data = request.POST
+
+    proprietario = Proprietario.objects.get(id=1) #TODO: Criar combobox para pegar o proprietário
+    veiculo = Veiculo.objects.create(placa=data['placa'], modelo=data['modelo'], cor=data['cor'], proprietario=proprietario)
+
+  veiculos = Veiculo.objects.all()
+
+  return render(request, 'pages/veiculos.html', {'veiculos': veiculos})
+>>>>>>> 844566599bad5eba4db1e0b8152b6daa4dd429f3
 
 @login_required(login_url='login')
 def vagas(request):
