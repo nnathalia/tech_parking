@@ -5,18 +5,19 @@
   <section class="container-fluid d-flex gap-2 auto p-3">
     <div class="formulario bg-section col-8 p-3 me-3 border-radius">
       <h3 class="">Cadastrar novo veículo</h3>
-      <form>
+      <form method="POST">
+        {% csrf_token %}
         <div class="mb-3">
           <label for="inputplaca" class="form-label">Placa</label>
-          <input type="text" class="form-control" id="inputplaca"  placeholder="Ex: ABC-1234">
+          <input type="text" class="form-control" id="inputplaca" name="placa"  placeholder="Ex: ABC-1234">
         </div>
         <div class="mb-3">
           <label for="inputmodelo" class="form-label">Modelo</label>
-          <input type="text" class="form-control" id="inputmodelo" placeholder="Ex: Honda Civic">
+          <input type="text" class="form-control" id="inputmodelo" name="modelo" placeholder="Ex: Honda Civic">
         </div>
         <div class="mb-3">
           <label for="inputcor" class="form-label">Cor</label>
-          <input type="text" class="form-control" id="inputcor" placeholder="Ex: Preto">
+          <input type="text" class="form-control" id="inputcor" name="cor" placeholder="Ex: Preto">
         </div>
         <button type="submit" class="btn btn-primary">Cadastrar</button>
       </form>
@@ -24,13 +25,24 @@
 
     <div class="lista-veiculos col-4 bg-section p-3 border-radius">
       <h3 class="">Meus veículos</h3>
-      <ul>
-        <li>veiculo 1</li>
-        <li>veiculo 2</li>
-        <li>veiculo 3</li>
-        <li>veiculo 4</li>
-      </ul>
-
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Placa</th>
+            <th>Modelo</th>
+            <th>Cor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for veiculo in veiculos %}
+          <tr>
+            <td>{{ veiculo.placa }}</td>
+            <td>{{ veiculo.modelo }}</td>
+            <td>{{ veiculo.cor }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </section>
 

@@ -1,5 +1,7 @@
+import json
 from django.shortcuts import render
-from . models import Proprietario, Veiculo
+from .models import Proprietario, Veiculo
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
   """Página principal do Tech Parking"""
@@ -8,11 +10,17 @@ def index(request):
 def proprietario(request, proprietario_id):
   propritario = Proprietario.objects.get(id = proprietario_id)
 
+@csrf_exempt
 def veiculos(request):
-  '''veiculo = Veiculo.objects.order_by('id')
-  context = {'veiculo': veiculo}
-  return render(request, 'parking/veiculos.html', context)'''
-  return render(request, 'pages/veiculos.html')
+  if request.method == 'POST':
+    data = request.POST
+
+    proprietario = Proprietario.objects.get(id=1) #TODO: Criar combobox para pegar o proprietário
+    veiculo = Veiculo.objects.create(placa=data['placa'], modelo=data['modelo'], cor=data['cor'], proprietario=proprietario)
+
+  veiculos = Veiculo.objects.all()
+
+  return render(request, 'pages/veiculos.html', {'veiculos': veiculos})
 
 def index(request):
   return render(request, 'index.html')
