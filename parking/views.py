@@ -90,7 +90,8 @@ def veiculos(request):
 
 @login_required(login_url='login')
 def vagas(request):
-  return render(request, 'pages/vagas.html')
+  vagas = Vaga.objects.all()
+  return render(request, 'pages/vagas.html', {'vagas': vagas})
 
 def index(request):
   return render(request, 'index.html')

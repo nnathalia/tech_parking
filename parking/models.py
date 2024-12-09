@@ -23,7 +23,7 @@ class Vaga(models.Model):
     ocupada = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.codigo_vaga
+        return f"{self.codigo_vaga} ({'Ocupada' if self.ocupada else 'Disponível'})"
 
 
 class Reserva(models.Model):

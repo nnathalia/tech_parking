@@ -4,4 +4,24 @@
 {% endblock %}
 {% block content %}
   <h1>Vagas</h1>
+
+  <div class="d-flex flex-wrap gap-3">
+    {% for vaga in vagas %}
+    <div class="p-3 vaga {% if vaga.ocupada %}
+        ocupada
+      {% else %}
+        disponivel
+      {% endif %}">
+      <h2>{{ vaga.codigo_vaga }}</h2>
+      <p>{{ vaga.tipo_vaga }}</p>
+      <p>
+        {% if vaga.ocupada %}
+          Ocupada
+        {% else %}
+          Disponível
+        {% endif %}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
 {% endblock %}
