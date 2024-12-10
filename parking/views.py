@@ -79,9 +79,7 @@ def veiculos(request):
 def veiculos(request):
   if request.method == 'POST':
     data = request.POST
-
-    proprietario = Proprietario.objects.get(id=1) #TODO: Criar combobox para pegar o proprietário
-    veiculo = Veiculo.objects.create(placa=data['placa'], modelo=data['modelo'], cor=data['cor'], proprietario=proprietario)
+    Veiculo.objects.create(placa=data['placa'], modelo=data['modelo'], cor=data['cor'], proprietario=request.user)
 
   veiculos = Veiculo.objects.all()
 
