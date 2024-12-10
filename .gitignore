@@ -1,7 +1,4 @@
 tp_venv
 .env
-<<<<<<< HEAD
 venv
-=======
-venv/
->>>>>>> 844566599bad5eba4db1e0b8152b6daa4dd429f3
+db.sqlite3
