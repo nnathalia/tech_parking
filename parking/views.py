@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Veiculo, Vaga
+from .models import Monitoramento, Veiculo, Vaga
 import json
+import time
 from django.shortcuts import render
-from .models import Veiculo
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.timezone import now
 
 
 
@@ -75,13 +76,15 @@ def home(request):
 def veiculos(request):
   return render(request, 'pages/veiculos.html')
 
+@login_required(login_url='login')
 @csrf_exempt
 def veiculos(request):
   if request.method == 'POST':
     data = request.POST
     Veiculo.objects.create(placa=data['placa'], modelo=data['modelo'], cor=data['cor'], proprietario=request.user)
 
-  veiculos = Veiculo.objects.all()
+   # Filtrar os veículos do usuário logado
+  veiculos = Veiculo.objects.filter(proprietario=request.user)
 
   return render(request, 'pages/veiculos.html', {'veiculos': veiculos})
 
@@ -89,6 +92,11 @@ def veiculos(request):
 @login_required(login_url='login')
 def vagas(request):
   vagas = Vaga.objects.all()
+  # Se a requisição for AJAX, retorna apenas o fragmento
+  if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+    return render(request, 'status_fragment.html', {'vagas': vagas})
+
+    # Caso contrário, retorna a página completa
   return render(request, 'pages/vagas.html', {'vagas': vagas})
 
 def index(request):
@@ -97,3 +105,69 @@ def index(request):
 
 def handler404(request, exception):
   return render(request, 'errors/404.html')
+
+
+def atualizar_status(self, distancia):
+    print(f"Atualizando status da vaga {self.vaga.codigo_vaga} com distância {distancia} cm")  # Debug
+    
+    if distancia < 10:  
+        self.status_vaga = "Ocupada"
+        self.vaga.ocupada = True
+    else:
+        self.status_vaga = "Disponível"
+        self.vaga.ocupada = False
+
+    print(f"Novo status: {self.status_vaga}")  # Debug
+
+    self.vaga.save()
+    self.save()
+
+
+
+@csrf_exempt
+def atualizar_monitoramento(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            distancia = data.get("distancia")
+            codigo_vaga = data.get("codigo_vaga")  
+
+            vaga = Vaga.objects.get(codigo_vaga=codigo_vaga)
+
+            # Criar uma nova instância de Monitoramento
+            monitoramento = Monitoramento(vaga=vaga, data_hora=now())
+            
+            # Atualizar status baseado na distância
+            monitoramento.atualizar_status(distancia)
+
+            return JsonResponse({"mensagem": "Status atualizado com sucesso!"}, status=200)
+        except Vaga.DoesNotExist:
+            return JsonResponse({"erro": "Vaga não encontrada"}, status=404)
+        except Exception as e:
+            return JsonResponse({"erro": str(e)}, status=400)
+
+    return JsonResponse({"erro": "Método não permitido"}, status=405)
+  
+  
+def verificar_status_vaga(request, codigo_vaga):
+    try:
+        vaga = Vaga.objects.get(codigo_vaga=codigo_vaga)
+        return JsonResponse({"ocupada": vaga.ocupada})
+    except Vaga.DoesNotExist:
+        return JsonResponse({"erro": "Vaga não encontrada"}, status=404)
+      
+def monitorar_vaga(request, codigo_vaga):
+    def evento():
+        while True:
+            try:
+                vaga = Vaga.objects.get(codigo_vaga=codigo_vaga)
+                status = "Ocupada" if vaga.ocupada else "Disponível"
+                yield f"data: {status}\n\n"
+                time.sleep(10)  # Atualiza a cada 10 segundos
+            except Vaga.DoesNotExist:
+                yield "data: Vaga não encontrada\n\n"
+                break
+
+    response = StreamingHttpResponse(evento(), content_type='text/event-stream')
+    response['Cache-Control'] = 'no-cache'
+    return response

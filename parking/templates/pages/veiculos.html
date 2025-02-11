@@ -10,15 +10,15 @@
         {% csrf_token %}
         <div class="mb-3">
           <label for="inputplaca" class="form-label">Placa</label>
-          <input type="text" class="form-control" id="inputplaca" name="placa"  placeholder="Ex: ABC-1234">
+          <input type="text" class="form-control" id="inputplaca" name="placa"  placeholder="Ex: ABC-1234" required>
         </div>
         <div class="mb-3">
           <label for="inputmodelo" class="form-label">Modelo</label>
-          <input type="text" class="form-control" id="inputmodelo" name="modelo" placeholder="Ex: Honda Civic">
+          <input type="text" class="form-control" id="inputmodelo" name="modelo" placeholder="Ex: Honda Civic" required>
         </div>
         <div class="mb-3">
           <label for="inputcor" class="form-label">Cor</label>
-          <input type="text" class="form-control" id="inputcor" name="cor" placeholder="Ex: Preto">
+          <input type="text" class="form-control" id="inputcor" name="cor" placeholder="Ex: Preto" required>
         </div>
         <button type="submit" class="btn btn-primary">Cadastrar</button>
       </form>
@@ -32,7 +32,6 @@
             <th>Placa</th>
             <th>Modelo</th>
             <th>Cor</th>
-            <th>Proprietário</th>
           </tr>
         </thead>
         <tbody>
@@ -41,7 +40,6 @@
             <td>{{ veiculo.placa }}</td>
             <td>{{ veiculo.modelo }}</td>
             <td>{{ veiculo.cor }}</td>
-            <td>{{ veiculo.proprietario.first_name }}</td>
           </tr>
           {% endfor %}
         </tbody>

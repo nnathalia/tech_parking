@@ -39,9 +39,20 @@ class Reserva(models.Model):
 
 class Monitoramento(models.Model):
     vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE)
-    status_vaga = models.CharField(max_length=20)
+    status_vaga = models.CharField(max_length=20, default="Disponível")
     veiculo = models.ForeignKey(Veiculo, on_delete=models.CASCADE, null=True, blank=True)
     data_hora = models.DateTimeField(auto_now_add=True)
+
+    def atualizar_status(self, distancia):
+        if distancia < 20:  # Exemplo: se a distância for menor que 10cm, a vaga está ocupada
+            self.status_vaga = "Ocupada"
+            self.vaga.ocupada = True
+        else:
+            self.status_vaga = "Disponível"
+            self.vaga.ocupada = False
+        
+        self.vaga.save()
+        self.save()
 
     def __str__(self):
         return f'Monitoramento da vaga {self.vaga} em {self.data_hora}'
