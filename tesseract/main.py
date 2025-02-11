@@ -3,10 +3,14 @@ import numpy as np
 from PIL import Image
 import pytesseract
 import re
+import serial
 from validator import verificar_placa_no_banco
 
 # Configuração do Tesseract (adicione o caminho se necessário)
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
+# Configuração da comunicação serial com o Arduino
+porta_serial = serial.Serial('COM3', 9600)  # Substitua 'COM3' pela porta correta
 
 # Abrir a webcam
 cap = cv2.VideoCapture(0)  # Use 0 para a webcam padrão
@@ -54,10 +58,12 @@ while not encontrado:
         # Verificar se a placa foi encontrada no banco
         if verificar_placa_no_banco(placa):
             print(f"Placa {placa} encontrada no banco de dados.")
+            # Enviar sinal ao Arduino
+            porta_serial.write(b'1')  # Envia o byte '1' para o Arduino
+            encontrado = True
+            break
         else:
             print(f"Placa {placa} não encontrada no banco de dados.")
-        encontrado = True
-        break
 
     # Exibir o frame processado na janela (opcional)
     cv2.imshow("Frame Processado", dilated)
@@ -69,3 +75,4 @@ while not encontrado:
 # Liberar a webcam e fechar janelas
 cap.release()
 cv2.destroyAllWindows()
+porta_serial.close()
