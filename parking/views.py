@@ -73,20 +73,38 @@ def home(request):
   return render(request, 'pages/home.html')
 
 @login_required(login_url='login')
+def perfil(request):
+  return render(request, 'pages/perfil.html')
+
+@login_required(login_url='login')
 def veiculos(request):
   return render(request, 'pages/veiculos.html')
 
 @login_required(login_url='login')
 @csrf_exempt
 def veiculos(request):
-  if request.method == 'POST':
-    data = request.POST
-    Veiculo.objects.create(placa=data['placa'], modelo=data['modelo'], cor=data['cor'], proprietario=request.user)
+    if request.method == 'POST':
+        data = request.POST
+        placa = data['placa'].upper()  # Normaliza a placa para evitar duplicações por letras minúsculas
+        modelo = data['modelo']
+        cor = data['cor']
 
-   # Filtrar os veículos do usuário logado
-  veiculos = Veiculo.objects.filter(proprietario=request.user)
+        # Verifica se a placa já existe no banco de dados
+        if Veiculo.objects.filter(placa=placa).exists():
+            messages.error(request, "Esta placa já está cadastrada!")
+        else:
+            Veiculo.objects.create(
+                placa=placa,
+                modelo=modelo,
+                cor=cor,
+                proprietario=request.user
+            )
+            messages.success(request, "Veículo cadastrado com sucesso!")
 
-  return render(request, 'pages/veiculos.html', {'veiculos': veiculos})
+    # Filtrar os veículos do usuário logado
+    veiculos = Veiculo.objects.filter(proprietario=request.user)
+
+    return render(request, 'pages/veiculos.html', {'veiculos': veiculos})
 
 
 @login_required(login_url='login')

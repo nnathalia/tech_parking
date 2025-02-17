@@ -27,19 +27,29 @@ try:
                 # Verifica se a linha contém informações para alguma vaga específica
                 match = re.search(r"(A\d):\s*([\d.]+)", line)
                 if match:
-                    codigo_vaga = match.group(1)  # Exemplo: "A1", "A2", "A3"
+                    codigo_vaga = match.group(1)  # Exemplo: "A1", "A2", "A3", "A4"
                     distancia = float(match.group(2))  # Captura a distância
-                    vagas[codigo_vaga] = distancia  # Atualiza a distância na vaga correspondente
 
-                    print(f"📏 {codigo_vaga} - Distância válida: {distancia} cm")
+                    # Lida com os sensores 1, 2 e 3 normalmente
+                    if codigo_vaga in vagas:
+                        vagas[codigo_vaga] = distancia  # Atualiza a distância na vaga correspondente
 
-                    # Enviar dados para a API Django
-                    response = requests.post(api_url, json={"distancia": distancia, "codigo_vaga": codigo_vaga})
+                        print(f"📏 {codigo_vaga} - Distância válida: {distancia} cm")
 
-                    if response.status_code == 200:
-                        print(f"✅ Dados da {codigo_vaga} enviados com sucesso para a API!")
-                    else:
-                        print(f"❌ Erro ao enviar dados da {codigo_vaga}: {response.status_code} - {response.text}")
+                        # Enviar dados para a API Django
+                        response = requests.post(api_url, json={"distancia": distancia, "codigo_vaga": codigo_vaga})
+
+                        if response.status_code == 200:
+                            print(f"✅ Dados da {codigo_vaga} enviados com sucesso para a API!")
+                        else:
+                            print(f"❌ Erro ao enviar dados da {codigo_vaga}: {response.status_code} - {response.text}")
+
+                    # Tratamento especial para o sensor A4
+                    elif codigo_vaga == "A4":
+                        if distancia > 0 and distancia < 20:
+                            print(f"✅ Sensor A4 ativado: Distância {distancia} cm.")
+                        else:
+                            print(f"⚡ Sensor A4 desativado, distância: ({distancia} cm).")
                 else:
                     print(f"⚠️ Formato inválido recebido: {line}")
 

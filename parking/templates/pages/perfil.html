@@ -1,0 +1,34 @@
+{% extends '../layout/layout.html' %}
+{% block title %}
+  Home
+{% endblock %}
+{% block content %}
+  {% load static %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6 user">
+        <div class="d-flex flex-column p-3 rounded-3 shadow-sm" style="background-color: whitesmoke;">
+          <h3 class="pb-3">Perfil</h3>
+          <div class="d-flex gap-4">
+            <div class="">
+              <img src="{% static 'img/perfil.jpg' %}" class="rounded-circle" alt="" width="120px" height="120px" style="border: 3px solid #072e33;" />
+            </div>
+            <div class="pt-3">
+              {% if user.is_authenticated %}
+                <h4 class="fs-5">Nome: {{ user.first_name }} {{ user.last_name }}</h4>
+                <h4 class="fs-5">Email: {{ user.email }}</h4>
+                <h4 class="fs-5">Automóveis: 5</h4>
+              {% endif %}
+
+              <div class="d-flex gap-2 mt-4 mb-4">
+                <a href="{% url 'vagas' %}"><button type="submit" class="btn p-2 text-white" style="width: 100%; background-color: #072e33;">Verificar vagas</button></a>
+
+                <a href="{% url 'veiculos' %}"><button type="submit" class="btn p-2 text-white" style="width: 100%; background-color: #072e33;">Veículos</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

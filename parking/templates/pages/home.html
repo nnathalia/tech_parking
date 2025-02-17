@@ -3,13 +3,17 @@
   Home
 {% endblock %}
 {% block content %}
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-6 user">
-        <div class="">
+  <div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="row w-75">
+      <div class="col-12 user text-center p-5 rounded shadow bg-white">
+        <div class="py-4">
           {% if user.is_authenticated %}
-            <p>Olá, {{ user.first_name }}!</p>
+            <h2 class="fw-bold">Olá, bem-vindo ao <span style="color: #072e33;">Tech Parking</span>, {{ user.first_name }}!</h2>
           {% endif %}
+
+          <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHBxY3B3dHBnb2hldmlleHN4YXM2azUzczhtdXV3d2s5ZW9tb2kxNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9S6UAxaKvwHTY1x6k5/giphy.gif" 
+               class="img-fluid rounded mt-4 shadow-sm" 
+               style="max-width: 300px;" alt="GIF Tech Parking">
         </div>
       </div>
     </div>
