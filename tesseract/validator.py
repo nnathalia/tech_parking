@@ -7,7 +7,7 @@ def verificar_placa_no_banco(placa):
     """
     try:
         # Conectar ao banco de dados SQLite
-        conexao = sqlite3.connect("db.sqlite3")
+        conexao = sqlite3.connect(r"db.sqlite3")
         cursor = conexao.cursor()
 
         # Pesquisar a placa na tabela 'parking_veiculo'

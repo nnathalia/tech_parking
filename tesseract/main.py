@@ -3,14 +3,10 @@ import numpy as np
 from PIL import Image
 import pytesseract
 import re
-import serial
 from validator import verificar_placa_no_banco
 
 # Configuração do Tesseract (adicione o caminho se necessário)
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
-# Configuração da comunicação serial com o Arduino
-porta_serial = serial.Serial('COM3', 9600)  # Substitua 'COM3' pela porta correta
 
 # Abrir a webcam
 cap = cv2.VideoCapture(0)  # Use 0 para a webcam padrão
@@ -20,9 +16,7 @@ if not cap.isOpened():
     print("Erro ao acessar a webcam")
     exit()
 
-encontrado = False
-
-while not encontrado:
+while True:
     # Capturar frame da webcam
     ret, frame = cap.read()
     if not ret:
@@ -32,12 +26,19 @@ while not encontrado:
     # Converter o frame para escala de cinza
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # Aplicar filtro de limiar
-    _, thresh = cv2.threshold(gray, 90, 255, cv2.THRESH_BINARY_INV)
+    # Aplicar equalização de histograma para melhorar contraste
+    clahe = cv2.createCLAHE(clipLimit=1.5, tileGridSize=(8, 8))
+    gray = clahe.apply(gray)
+
+    # Aplicar filtro de limiar adaptativo
+    thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+
+    # Aplicar filtro mediano para reduzir ruídos
+    filtered = cv2.medianBlur(thresh, 3)
 
     # Aplicar dilatação
     kernel = np.ones((2, 2), np.uint8)
-    dilated = cv2.dilate(thresh, kernel, iterations=1)
+    dilated = cv2.dilate(filtered, kernel, iterations=1)
 
     # Converter o frame pré-processado para o formato PIL
     pil_image = Image.fromarray(dilated)
@@ -49,19 +50,22 @@ while not encontrado:
     # Limpar o texto detectado de quebras de linha ou espaços indesejados
     texto = texto.strip()
 
-    # Buscar todas as placas detectadas
-    placas_detectadas = re.findall(r'[A-Z]{3}[0-9][A-Z][0-9]{2}|[A-Z]{3}-?[0-9]{4}', texto)
+    # Validar placas no texto reconhecido
+    match_mercosul = re.search(r'[A-Z]{3}[0-9][A-Z][0-9]{2}', texto)
+    match_antigo = re.search(r'[A-Z]{3}-?[0-9]{4}', texto)
 
-    for placa in placas_detectadas:
-        print(f"Placa detectada: {placa}")
+    placa = None
+    if match_mercosul:
+        placa = match_mercosul.group()
+        print(f"Placa Mercosul detectada: {placa}")
+    elif match_antigo:
+        placa = match_antigo.group()
+        print(f"Placa Antiga detectada: {placa}")
         
-        # Verificar se a placa foi encontrada no banco
+    # Verificar se a placa foi encontrada no banco
+    if placa:
         if verificar_placa_no_banco(placa):
             print(f"Placa {placa} encontrada no banco de dados.")
-            # Enviar sinal ao Arduino
-            porta_serial.write(b'1')  # Envia o byte '1' para o Arduino
-            encontrado = True
-            break
         else:
             print(f"Placa {placa} não encontrada no banco de dados.")
 
@@ -75,4 +79,3 @@ while not encontrado:
 # Liberar a webcam e fechar janelas
 cap.release()
 cv2.destroyAllWindows()
-porta_serial.close()
