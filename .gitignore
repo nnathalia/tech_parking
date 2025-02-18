@@ -1,4 +1,13 @@
 tp_venv
 .env
+<<<<<<< HEAD
 venv
 db.sqlite3
+=======
+<<<<<<< Updated upstream
+venv
+=======
+venv
+
+>>>>>>> Stashed changes
+>>>>>>> teste_api
