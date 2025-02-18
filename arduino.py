@@ -21,7 +21,7 @@ print("🚀 Iniciando leitura da porta serial...")
 
 try:
     while True:
-        line = arduino.readline().decode('utf-8').strip()
+        line = arduino.readline().decode('utf-8').strip() 
         if line:
             try:
                 # Verifica se a linha contém informações para alguma vaga específica
@@ -46,10 +46,12 @@ try:
 
                     # Tratamento especial para o sensor A4
                     elif codigo_vaga == "A4":
-                        if distancia > 0 and distancia < 20:
+                        if 0 < distancia < 20:
                             print(f"✅ Sensor A4 ativado: Distância {distancia} cm.")
+                            arduino.write(b"servo_on\n")  # Envia comando para o Arduino
                         else:
                             print(f"⚡ Sensor A4 desativado, distância: ({distancia} cm).")
+
                 else:
                     print(f"⚠️ Formato inválido recebido: {line}")
 
