@@ -3,67 +3,70 @@
   Veiculos
 {% endblock %}
 {% block content %}
-  <section class="container-fluid d-flex gap-2 auto p-3">
-    <div class="formulario col-7 p-3 me-3 rounded-3 bg-white shadow">
-      <h2 class="">Cadastrar novo veículo</h2>
-      <form method="POST">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="inputplaca" class="form-label">Placa</label>
-          <div class="input-group">
-            <span class="input-group-text px-6" style="background-color: #f1fcfc;"><i class="fa-solid fa-id-card" style="color:#16484b;"></i></span>
-            <input type="text" class="form-control ps-2" id="inputplaca" name="placa" placeholder="Ex: ABC-1234" required />
+  <section class="container-fluid">
+    <div class="row d-flex gap-2">
+      <div class="formulario col-lg-6 col-sm-12 p-3 me-3 rounded-3 bg-white shadow">
+        <h2 class="">Cadastrar novo veículo</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="inputplaca" class="form-label">Placa</label>
+            <div class="input-group">
+              <span class="input-group-text px-6" style="background-color: #f1fcfc;"><i class="fa-solid fa-id-card" style="color:#16484b;"></i></span>
+              <input type="text" class="form-control ps-2" id="inputplaca" name="placa" placeholder="Ex: ABC-1234" required />
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="inputmodelo" class="form-label">Modelo</label>
-          <div class="input-group">
-            <span class="input-group-text px-6" style="background-color: #f1fcfc;"><i class="fa-solid fa-car" style="color:#16484b;"></i></span>
-            <input type="text" class="form-control" id="inputmodelo" name="modelo" placeholder="Ex: Honda Civic" required />
+          <div class="mb-3">
+            <label for="inputmodelo" class="form-label">Modelo</label>
+            <div class="input-group">
+              <span class="input-group-text px-6" style="background-color: #f1fcfc;"><i class="fa-solid fa-car" style="color:#16484b;"></i></span>
+              <input type="text" class="form-control" id="inputmodelo" name="modelo" placeholder="Ex: Honda Civic" required />
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="inputcor" class="form-label">Cor</label>
-          <div class="input-group">
-            <span class="input-group-text px-6" style="background-color: #f1fcfc;"><i class="fa-solid fa-palette" style="color:#16484b;"></i></span>
-            <input type="text" class="form-control" id="inputcor" name="cor" placeholder="Ex: Preto" required />
+          <div class="mb-3">
+            <label for="inputcor" class="form-label">Cor</label>
+            <div class="input-group">
+              <span class="input-group-text px-6" style="background-color: #f1fcfc;"><i class="fa-solid fa-palette" style="color:#16484b;"></i></span>
+              <input type="text" class="form-control" id="inputcor" name="cor" placeholder="Ex: Preto" required />
+            </div>
           </div>
-        </div>
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert {% if message.tags == 'error' %}
-                alert-danger
-              {% else %}
-                alert-success
-              {% endif %}">{{ message }}</div>
-          {% endfor %}
-        {% endif %}
-        <div class="bg-button mt-4">
-          <button type="submit" class="btn fw-bold p-2 text-white" style="width: 200px; background-color: #072e33;">Salvar</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="lista-veiculos col-5 p-3 rounded-3 bg-white shadow">
-      <h3 class="">Meus veículos</h3>
-      <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th>Placa</th>
-            <th>Modelo</th>
-            <th>Cor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for veiculo in veiculos %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert {% if message.tags == 'error' %}
+                  alert-danger
+                {% else %}
+                  alert-success
+                {% endif %}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+          <div class="bg-button mt-4">
+            <button type="submit" class="btn fw-bold p-2 text-white" style="width: 200px; background-color: #072e33;">Salvar</button>
+          </div>
+        </form>
+      </div>
+  
+      <div class="lista-veiculos col-lg-5  col-sm-12 p-3 rounded-3 bg-white shadow">
+        <h3 class="">Meus veículos</h3>
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
             <tr>
-              <td>{{ veiculo.placa }}</td>
-              <td>{{ veiculo.modelo }}</td>
-              <td>{{ veiculo.cor }}</td>
+              <th>Placa</th>
+              <th>Modelo</th>
+              <th>Cor</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for veiculo in veiculos %}
+              <tr>
+                <td>{{ veiculo.placa }}</td>
+                <td>{{ veiculo.modelo }}</td>
+                <td>{{ veiculo.cor }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
+    
   </section>
 {% endblock %}

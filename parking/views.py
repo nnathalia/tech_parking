@@ -189,3 +189,4 @@ def monitorar_vaga(request, codigo_vaga):
     response = StreamingHttpResponse(evento(), content_type='text/event-stream')
     response['Cache-Control'] = 'no-cache'
     return response
+  
