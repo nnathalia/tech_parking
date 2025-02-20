@@ -7,4 +7,4 @@
 
 ![Projeto de IOT - Estacionamento Inteligente (5)](https://github.com/user-attachments/assets/07d2716b-e8f7-49ed-aacd-6d677673bf2b)
 
-![Projeto de IOT - Estacionamento Inteligente (6)](https://github.com/user-attachments/assets/f2016e59-9965-48ab-b3b3-4949ab46ba4a)
+
